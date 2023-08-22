@@ -1,0 +1,33 @@
+## Spring Security OAuth2 Resource Server Configuration:
+#  spring.security.oauth2.resourceserver.jwt.issuer-uri specifies the issuer URI of the JWT tokens.
+#  In this case, it is set to http://localhost:8080/realms/suneth, indicating that the JWT tokens are issued by Keycloak running at that URL.
+#  spring.security.oauth2.resourceserver.jwt.jwk-set-uri is the URI where the JSON Web Key (JWK) Set can be obtained.
+#  It is derived from the issuer URI and appended with /protocol/openid-connect/certs,
+#  indicating the endpoint to retrieve the cryptographic keys used for JWT verification.
+
+## Server Configuration:
+#  server.port specifies the port on which the Spring Boot application will run.
+#  In this case, it is set to 8081, indicating that the application will run on port 8081.
+
+## JWT Authentication Converter Configuration:
+#  jwt.auth.converter.resource-id specifies the resource ID associated with the JWT tokens. This value is typically used for authorization purposes.
+#  jwt.auth.converter.principle-attribute defines the attribute of the JWT token that represents the principle or the user identity.
+# In this case, it is set to preferred_username, indicating that the preferred_username attribute in the JWT token will be used as the user's principle.
+#  This configuration sets up the Spring Security OAuth2 Resource Server to validate and process JWT tokens issued by Keycloak.
+# The server runs on port 8081, and the JWT authentication converter is configured with the appropriate resource ID and principle attribute.
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/suneth
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+server:
+  port: 8081
+
+jwt:
+  auth:
+    converter:
+      resource-id: keycloak-test-cli
+      principle-attribute: preferred_username
